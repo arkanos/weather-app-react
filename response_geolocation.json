@@ -1,0 +1,25 @@
+{
+    "place_id": 10010987,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 965993073,
+    "lat": "54.982375",
+    "lon": "9.283268",
+    "display_name": "6, Bredhøjvej, Bollersleben, Aabenraa Municipality, Dinamarca Meridional, 6392, Dinamarca",
+    "address": {
+        "house_number": "6",
+        "road": "Bredhøjvej",
+        "village": "Bollersleben",
+        "municipality": "Aabenraa Municipality",
+        "state": "Dinamarca Meridional",
+        "postcode": "6392",
+        "country": "Dinamarca",
+        "country_code": "dk"
+    },
+    "boundingbox": [
+        "54.982325",
+        "54.982425",
+        "9.283218",
+        "9.283318"
+    ]
+}
