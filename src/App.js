@@ -8,11 +8,12 @@ import GeoLocationApi from './api/geolocation';
 import './fonts/fontawesome';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
+import Weather from './components/weather';
+
 function App() {
     let [location, setLocation] = useState('');
-    let [language, setLanguage] = useState('en');
-    let [units, setUnits] = useState('metric');
-    let [weatherData, setWeatherData] = useState({data: false});
+    let [weatherData, setWeatherData] = useState({});
+    let [transitioning, setTransitioning] = useState(true);
 
     useEffect(() => {
         if ('geolocation' in navigator) {
@@ -36,48 +37,44 @@ function App() {
     }, [location]);
 
     let timeout = false;
-    let setInputLocation = (event) => {
+    const setInputLocation = (event) => {
         if (timeout) clearTimeout(timeout);
         timeout = setTimeout(() => {
             setLocation(event.target.value);
+            setTransitioning(false);
         }, 2500);
     };
 
-    let getWeatherData = (locationName) => {
+    const getWeatherData = (locationName) => {
         if (locationName.length >= 3) {
-            console.log('LLAMAMOS API CON', locationName);
-            WeatherApi.getWeatherLocation(locationName, language, units)
+            WeatherApi.getWeatherLocation(locationName)
                 .then((data) => {
-                    setWeatherData({...weatherData, data: data});
+                    setTransitioning(true);
+                    setWeatherData(data);
                 })
                 .catch((error) => {
                     console.log(error);
-                    setWeatherData({data: false});
+                    setWeatherData({});
                 });
         }
     };
 
     return (
         <div className="container">
-            {/* {weatherData.data ? (
-                <p>SI HAY DATOS {JSON.stringify(weatherData, null, 2)}</p>
-            ) : (
-                <p>NO HAY DATOS </p>
-            )} */}
-            {weatherData.data.cod === 200 && (
-                <div
-                    className={`data ${
-                        weatherData.data.cod === 200 ? 'fade-in' : 'fade-out'
-                    }`}>
+            {weatherData.cod === 200 ? (
+                <div className={transitioning ? 'fade-in' : 'fade-out'}>
                     <header>
-                        <div className="icon sun-shower">
-                            <div className="cloud"></div>
-                            <div className="sun">
-                                <div className="rays"></div>
-                            </div>
-                            <div className="rain"></div>
-                        </div>
-                        <h1>{weatherData.data.name}</h1>
+                        <Weather
+                            iconId={weatherData.weather[0].id}
+                            sunrise={weatherData.sys.sunrise}
+                            sunset={weatherData.sys.sunset}
+                        />
+                        <h1>
+                            {weatherData.name}
+                            <span className="pill">
+                                {weatherData.sys.country}
+                            </span>
+                        </h1>
                     </header>
                     <section>
                         <div className="data-item">
@@ -86,7 +83,7 @@ function App() {
                                 icon="wind"
                                 className="wind-color"
                             />
-                            <p>{weatherData.data.wind.speed} m/s</p>
+                            <p>{weatherData.wind.speed} m/s</p>
                         </div>
                         <div className="data-item">
                             <label>Curr. temp.</label>
@@ -94,7 +91,7 @@ function App() {
                                 icon="temperature-high"
                                 className="temp-color"
                             />
-                            <p>{weatherData.data.main.temp} º</p>
+                            <p>{Math.round(weatherData.main.temp)} º</p>
                         </div>
                         <div className="data-item">
                             <label>Min. temp.</label>
@@ -102,7 +99,7 @@ function App() {
                                 icon="chevron-down"
                                 className="min-temp-color"
                             />
-                            <p>{weatherData.data.main.temp_min} º</p>
+                            <p>{Math.round(weatherData.main.temp_min)} º</p>
                         </div>
                         <div className="data-item">
                             <label>Max temp.</label>
@@ -110,7 +107,7 @@ function App() {
                                 icon="chevron-up"
                                 className="max-temp-color"
                             />
-                            <p>{weatherData.data.main.temp_max} º</p>
+                            <p>{Math.round(weatherData.main.temp_max)} º</p>
                         </div>
                         <div className="data-item">
                             <label>Pressure</label>
@@ -118,7 +115,7 @@ function App() {
                                 icon="tachometer-alt"
                                 className="pressure-color"
                             />
-                            <p>{weatherData.data.main.pressure}</p>
+                            <p>{weatherData.main.pressure} hPa</p>
                         </div>
                         <div className="data-item">
                             <label>Humidity</label>
@@ -126,22 +123,31 @@ function App() {
                                 icon="tint"
                                 className="humidity-color"
                             />
-                            <p>{weatherData.data.main.humidity}</p>
+                            <p>{weatherData.main.humidity} %</p>
                         </div>
                     </section>
                 </div>
-            )}
+            ) : null}
+            {weatherData.cod === '404' ? (
+                <div className="not-found">
+                    <h1>Ooops! Location not found</h1>
+                </div>
+            ) : null}
             <label>
                 <input
                     type="text"
                     className="input"
                     onChange={setInputLocation}
+                    required
                 />
                 <div className="label-text">Type a location...</div>
             </label>
             <footer>
                 <p>
-                    <a href="https://github.com/arkanos" target="_blank">
+                    <a
+                        href="https://github.com/arkanos"
+                        target="_blank"
+                        rel="noopener noreferrer">
                         Made with <span style={{color: '#e25555'}}>❤</span>
                     </a>
                 </p>

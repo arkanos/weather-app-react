@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
 *,
 *:focus,
 *:hover {
@@ -15,10 +17,23 @@ html *:after {
 
 body {
     margin: 0 auto;
+    color: #161616;
     font-family: 'Roboto', sans-serif;
     text-align: center;
-    background-color: black;
+    background-color: currentColor;
+}
+
+h1 {
+    margin-bottom: 1.375em;
+    color: #fff;
+    font-weight: 50;
+    font-size: 2em;
+    text-transform: uppercase;
+}
+
+p {
     color: white;
+    font-size: smaller;
 }
 
 header {
@@ -53,6 +68,17 @@ a:active {
     text-decoration: none;
 }
 
+.pill {
+    padding: 0.2em 0.6em;
+    border-radius: 30px;
+    color: white;
+    background: orange;
+    font-size: small;
+    font-weight: bold;
+    position: relative;
+    bottom: 2em;
+}
+
 .data-item {
     padding: 0.5em 2em 0.5em 2em;
 }
@@ -64,11 +90,6 @@ a:active {
     display: none;
 }
 
-// .data-item p:hover,
-// .data-item svg:hover {
-//     font-size: 35px;
-// }
-
 .data-item p {
     font-size: 30px;
 }
@@ -79,6 +100,8 @@ a:active {
 
 label {
     display: block;
+    justify-content: center;
+    align-items: center;
     letter-spacing: 4px;
     padding-top: 30px;
     text-align: center;
@@ -105,17 +128,18 @@ label input:focus {
 }
 
 label input:valid + .label-text {
-    font-size: 13px;
+    display: none;
 }
+
 label input:focus + .label-text {
-    color: #f0f0f0;
+    color: #161616;
     font-size: 13px;
     -webkit-transform: translateY(-74px);
     transform: translateY(-74px);
 }
 
 label .label-text {
-    color: #9b9b9b;
+    color: #f0f0f0;
     cursor: text;
     font-size: 20px;
     line-height: 20px;
@@ -124,6 +148,12 @@ label .label-text {
     transform: translateY(-34px);
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
+}
+
+.not-found {
+    min-height: 300px;
+    padding: 3em 3em 3em 3em;
+    font-size: x-large;
 }
 
 .wind-color path {
@@ -203,11 +233,11 @@ label .label-text {
 }
 
 .fade-out {
-    animation: fadeOut ease 8s;
-    -webkit-animation: fadeOut ease 8s;
-    -moz-animation: fadeOut ease 8s;
-    -o-animation: fadeOut ease 8s;
-    -ms-animation: fadeOut ease 8s;
+    animation: fadeOut ease 2s;
+    -webkit-animation: fadeOut ease 2s;
+    -moz-animation: fadeOut ease 2s;
+    -o-animation: fadeOut ease 2s;
+    -ms-animation: fadeOut ease 2s;
 }
 @keyframes fadeOut {
     0% {
