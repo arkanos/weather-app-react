@@ -1,6 +1,4 @@
-# Título del Proyecto
-
-Weather App React
+# Weather App React
 
 ### Instalación 🔧
 
